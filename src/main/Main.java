@@ -10,28 +10,10 @@ public class Main {
 	private static ArrayList<Aviao> aviaos = new ArrayList<Aviao>();
 	
 	private static Scanner scan = new Scanner(System.in);
+	
+	private static String SYMBOL_SCAN_IN = "<";
 
-	public static void main(String[] args) 
-	{
-		Scanner scan = new Scanner( System.in );
-		
-		Aviao aviao13;
-		
-		System.out.println( "~~~~ GESTOR DE AVIAÇÃO ~~~~" );
-		registraAviao();
-		
-		printAviaos();
-		
-		pesquisaAviao();
 	
-		removerAviao();
-	
-		
-		printAviaos();
-		
-		
-		scan.close();
-	}
 	
 	private static void pesquisaAviao() 
 	{
@@ -131,9 +113,16 @@ public class Main {
 		
 	}
 	private static Aviao entradaAviao() {
-		System.out.println( "Digite as seguintes informações sobre o avião. " );
+		System.out.println( "-Digite as seguintes informações sobre o avião. " );
+		System.out.println( ">Registro:" );
+		System.out.print( SYMBOL_SCAN_IN );
 		String avReg = scan.next();
+		System.out.println( ">Modelo:" );
+		System.out.print( SYMBOL_SCAN_IN );
 		String avModel = scan.next();
+		
+		System.out.println( ">Capacidade:" );
+		System.out.print( SYMBOL_SCAN_IN );
 		int avCap = scan.nextInt();
 		Aviao av = new Aviao(avReg, avModel, avCap);
 		
@@ -143,6 +132,13 @@ public class Main {
 	
 	private static void printAviaos() {
 		System.out.println( "---- PRINTANDO LISTA DE AVIÕES ----" );
+		
+		//VERIFICA VAZIO
+		if( aviaos.size() == 0 ) {
+			System.out.println( ">Não há aviões registrados" );
+			return;
+		}
+		
 		System.out.println();
 		for( int i = 0; i<aviaos.size(); i++ ) 
 		{
@@ -155,6 +151,39 @@ public class Main {
 		System.out.println( "	REGISTRO	: " + av.getRegistro() );
 		System.out.println( "	Modelo	: " + av.getModelo() );
 		System.out.println( "	Capacidade	: " + av.getCapacidade() );
+	}
+	
+	public static void main(String[] args) //MAIN
+	{
+		
+		Scanner scan = new Scanner( System.in );
+		
+		String cmdQuit = "0";
+		String cmd = "";
+		
+		System.out.println( "~~~~ GESTOR DE AVIAÇÃO ~~~~" );
+
+		while( !cmd.equals(cmdQuit) ) 
+		{
+			System.out.println( "-Digite a ação desejada: 1-Registrar Avião, 2-Listar Aviões \n" + 
+					" 3-Pesquisar aeronave, 4-Remover aeronave \n"
+					+ " 0-quit" );
+			
+			cmd = scan.next();
+			
+			switch( cmd ) {
+			case "1": registraAviao(); break;
+			case "2": printAviaos(); break;
+			case "3": pesquisaAviao(); break;
+			case "4": removerAviao(); break;
+			case "0": System.out.println( ">saindo..." );
+			default: System.out.println( ">Valor inválido!!!" );
+			}
+		}
+		
+		
+		scan.close();
+		System.out.println( " XXX PROGRAMA FECHADO XXX " );
 	}
 	
 	
